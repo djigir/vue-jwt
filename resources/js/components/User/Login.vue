@@ -1,5 +1,8 @@
 <template>
     <div class="w-25">
+        <div v-if="error" class="text-danger">
+            {{ this.error }}
+        </div>
         <input v-model="email" type="email" class="form-control mt-3 mb-3" placeholder="Email">
         <input v-model="password" type="password" class="form-control mb-3" placeholder="Password">
         <input @click.prevent="login" type="submit" class="btn btn-primary mb-3">
@@ -14,6 +17,7 @@
             return {
                 email: null,
                 password: null,
+                error: null,
             }
         },
 
@@ -26,6 +30,9 @@
                 .then( res => {
                     localStorage.setItem('access_token', res.data.access_token)
                     this.$router.push({ name: 'user.personal' })
+                })
+                .catch( error => {
+                    this.error = error.response.data.error
                 })
             }
         }

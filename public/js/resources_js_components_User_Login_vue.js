@@ -19,12 +19,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "Login",
   data: function data() {
     return {
       email: null,
-      password: null
+      password: null,
+      error: null
     };
   },
   methods: {
@@ -40,6 +44,8 @@ __webpack_require__.r(__webpack_exports__);
         _this.$router.push({
           name: 'user.personal'
         });
+      })["catch"](function (error) {
+        _this.error = error.response.data.error;
       });
     }
   }
@@ -132,6 +138,12 @@ var render = function () {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "w-25" }, [
+    _vm.error
+      ? _c("div", { staticClass: "text-danger" }, [
+          _vm._v("\n        " + _vm._s(this.error) + "\n    "),
+        ])
+      : _vm._e(),
+    _vm._v(" "),
     _c("input", {
       directives: [
         {
