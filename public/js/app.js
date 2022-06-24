@@ -5441,14 +5441,8 @@ api.interceptors.request.use(function (config) {
 }, function (error) {}); // end request
 // start response
 
-api.interceptors.response.use(function (config) {
-  if (localStorage.getItem('access_token')) {
-    config.headers.authorization = "Bearer ".concat(localStorage.getItem('access_token'));
-  }
-
-  return config;
-}, function (error) {
-  if ('Token has expired' === error.response.data.message) {
+api.interceptors.response.use({}, function (error) {
+  if (error.response.data.message === 'Token has expired') {
     return axios__WEBPACK_IMPORTED_MODULE_0___default().post('/api/auth/refresh', {}, {
       headers: {
         'authorization': "Bearer ".concat(localStorage.getItem('access_token'))
